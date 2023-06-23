@@ -1,6 +1,5 @@
 import Loading from '@/Components/Animation/Loading';
 import PrimaryButton from '@/Components/PrimaryButton';
-import { useResponse } from '@/Hooks/useResponse';
 import useTypedPage from '@/Hooks/useTypedPage';
 import DashboardLayout from '@/Layouts/DashboardLayout'
 import { useForm } from '@inertiajs/inertia-react';
@@ -16,7 +15,7 @@ interface Props {
 }
 
 const Create = ({ roles }: Props) => {
-  const [response, dispatch] = useResponse();
+  // const [response, dispatch] = useResponse();
   const { errors } = useTypedPage().props;
 
   const roleMap = useMemo(() => roles.map(role => {
@@ -96,7 +95,7 @@ const Create = ({ roles }: Props) => {
               </div>
             )}
             <div className="flex flex-row gap-2">
-              {response.progress && <Loading />}
+              {/* {response.progress && <Loading />} */}
               <PrimaryButton label='Submit' className='w-full' type='submit' disabled={!isMatched || form.data.confirmPassword === ""} />
             </div>
           </div>

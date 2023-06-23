@@ -6,7 +6,6 @@ import LinkButton from '@/Components/LinkButton';
 import { Dialog, DialogContent } from "@mui/material";
 import useTypedPage from '@/Hooks/useTypedPage';
 import route from 'ziggy-js';
-import { useResponse } from '@/Hooks/useResponse';
 import Loading from '@/Components/Animation/Loading';
 
 interface Props {
@@ -25,7 +24,7 @@ interface Props {
 const Index = ({ users }: Props) => {
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [response, dispatch] = useResponse();
+  // const [response, dispatch] = useResponse();
   const page = useTypedPage();
   const userId = page.props.auth.user?.id;
   const deleteForm = useForm();
@@ -52,13 +51,7 @@ const Index = ({ users }: Props) => {
     , [users]);
 
   const deleteUserHandler = () => {
-    deleteForm.delete(route('user.destroy', selectedId!), {
-      onStart: () => dispatch({ type: "PROGRESS", payload: null }),
-      onSuccess: () => dispatch({ type: "SUCCESS", payload: null }),
-      onError: (error) => {
-        dispatch({ type: "ERROR", payload: error.message })
-      }
-    });
+    deleteForm.delete(route('user.destroy', selectedId!));
     setSelectedId(null);
   }
 
@@ -84,7 +77,6 @@ const Index = ({ users }: Props) => {
         <div className="flex flex-row justify-between items-center">
           <h1 className='text-3xl font-bold'>User</h1>
           <div className="flex gap-3 items-center">
-            {response.progress && <Loading />}
             <LinkButton href={route('user.create')} label='Add User' />
           </div>
         </div>

@@ -1,6 +1,5 @@
 import Loading from '@/Components/Animation/Loading';
 import PrimaryButton from '@/Components/PrimaryButton';
-import { useResponse } from '@/Hooks/useResponse';
 import useTypedPage from '@/Hooks/useTypedPage';
 import DashboardLayout from '@/Layouts/DashboardLayout'
 import { useForm } from '@inertiajs/inertia-react';
@@ -23,7 +22,7 @@ interface Props {
 }
 
 const Edit = ({ user, roles }: Props) => {
-  const [response, dispatch] = useResponse();
+  // const [response, dispatch] = useResponse();
   const { errors } = useTypedPage().props;
   //@ts-ignore
   const roleMap = useMemo(() => roles.map(role => {
@@ -52,13 +51,7 @@ const Edit = ({ user, roles }: Props) => {
   const onSubmitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(form.data);
-    form.put(route('user.update', user.id), {
-      onStart: () => dispatch({ type: "PROGRESS", payload: null }),
-      onSuccess: () => dispatch({ type: "SUCCESS", payload: null }),
-      onError: (error) => {
-        dispatch({ type: "ERROR", payload: error.message })
-      }
-    });
+    form.put(route('user.update', user.id));
   };
   return (
     <DashboardLayout>
@@ -108,7 +101,6 @@ const Edit = ({ user, roles }: Props) => {
               </div>
             )}
             <div className="flex flex-row gap-2">
-              {response.progress && <Loading />}
               <PrimaryButton label='Submit' className='w-full' type='submit' disabled={!isMatched}/>
             </div>
           </div>
