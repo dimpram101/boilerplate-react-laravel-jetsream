@@ -2,16 +2,19 @@ import { useReducer } from "react";
 
 interface IResponse {
   progress: boolean,
-  success: boolean,
+  success: {
+    isSuccess: boolean,
+    message: any | null,
+  },
   error: {
     isError: boolean,
-    message: string,
+    message: any | null,
   },
 }
 
 interface ResponseAction {
   type: string,
-  payload: any | null
+  payload: string | null
 }
 
 const responseReducer = (state: IResponse, action: ResponseAction) => {
@@ -22,7 +25,10 @@ const responseReducer = (state: IResponse, action: ResponseAction) => {
       return {
         ...state,
         progress: true,
-        success: false,
+        success: {
+          isSuccess: false,
+          message: null
+        },
         error: {
           isError: false,
           message: null
@@ -32,7 +38,10 @@ const responseReducer = (state: IResponse, action: ResponseAction) => {
       return {
         ...state,
         progress: false,
-        success: true,
+        success: {
+          isSuccess: true,
+          message: payload
+        },
         error: {
           isError: false,
           message: null
@@ -42,7 +51,10 @@ const responseReducer = (state: IResponse, action: ResponseAction) => {
       return {
         ...state,
         progress: false,
-        success: false,
+        success: {
+          isSuccess: false,
+          message: null
+        },
         error: {
           isError: true,
           message: payload
@@ -55,9 +67,12 @@ const responseReducer = (state: IResponse, action: ResponseAction) => {
 
 export const useResponse = () => useReducer(responseReducer, {
   progress: false,
-  success: false,
+  success: {
+    isSuccess: false,
+    message: ""
+  },
   error: {
     isError: false,
-    message: null
+    message: ""
   }
 })
