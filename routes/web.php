@@ -32,6 +32,7 @@ Route::middleware([
         });
 
         Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.index');
+        Route::put('/profile/{id}', [UserController::class, 'guestUpdate'])->name('profile.update');
         Route::middleware(['role:super-admin'])->group(function () {
             Route::resource("/user", UserController::class);
         });
